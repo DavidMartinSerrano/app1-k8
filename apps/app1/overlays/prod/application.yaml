@@ -1,0 +1,19 @@
+# kubernetes/apps/app1/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prod-app1
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/DavidMartinSerrano/app1-k8.git'
+    targetRevision: master
+    path: apps/app1/overlays/prod
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
